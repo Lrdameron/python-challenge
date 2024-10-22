@@ -1,5 +1,5 @@
-# -*- coding: UTF-8 -*-
-"""PyPoll Homework Starter File."""
+# # -*- coding: UTF-8 -*-
+# """PyPoll Homework Starter File."""
 
 # Import necessary modules
 import csv
@@ -13,7 +13,8 @@ file_to_output = os.path.join("analysis", "election_analysis.txt")  # Output fil
 total_votes = 0  # Track the total number of votes cast
 
 # Define lists and dictionaries to track candidate names and vote counts
-
+candidates = [] # list
+vote_count = {} # dictionary (Xpert)
 
 # Winning Candidate and Winning Count Tracker
 
@@ -32,39 +33,49 @@ with open(file_to_load) as election_data:
         print(". ", end="")
 
         # Increment the total vote count for each row
-
+        total_votes += 1
 
         # Get the candidate's name from the row
-
+        candidate_name = row[2]
 
         # If the candidate is not already in the candidate list, add them
-
+        if candidate_name not in candidates: #(Xpert)
+            candidates.append(candidate_name)  # Add candidate to the list (Xpert)
+            vote_count[candidate_name] = 0  # Initialize their vote count (Xpert)
 
         # Add a vote to the candidate's count
-
+        vote_count[candidate_name] += 1 # (Xpert)
 
 # Open a text file to save the output
 with open(file_to_output, "w") as txt_file:
 
     # Print the total vote count (to terminal)
-
+    print(f"Total Votes: {total_votes}")
 
     # Write the total vote count to the text file
-
+    txt_file.write(f"Total Votes: {total_votes}\n") # (Xpert)
+    
+    # Winning Candidate and Winning Count Tracker
+    winning_candidate = "" # (Xpert)
+    winning_count = 0 # (Xpert)
 
     # Loop through the candidates to determine vote percentages and identify the winner
-
+    for candidate in candidates:
 
         # Get the vote count and calculate the percentage
-
+        votes = vote_count[candidate]  # (Xpert)
+        percentage = (votes / total_votes) * 100   # (Xpert)
 
         # Update the winning candidate if this one has more votes
-
+        if votes > winning_count:  # (Xpert)
+            winning_count = votes # (Xpert)
+            winning_candidate = candidate # (Xpert)
 
         # Print and save each candidate's vote count and percentage
-
+        print(f"{candidate}: {percentage:.3f}% ({votes})")  # (Xpert) (Google)
+        txt_file.write(f"{candidate}: {percentage:.3f}% ({votes})\n")  # (Xpert)
 
     # Generate and print the winning candidate summary
-
-
+    print(f"Winner: {winning_candidate}")   
     # Save the winning candidate summary to the text file
+    txt_file.write(f"Winner: {winning_candidate}\n")  
